@@ -12,11 +12,11 @@ function GamesGrid() {
   return (
     <>
       {error && <Text>{error}</Text>}
-      <Center>
+      {/* <Center>
         {isLoading && (
           <SimpleGrid
             columns={{ base: 1, sm: 2, md: 2, lg: 2, xl: 3 }}
-            gap={10}
+            gap={8}
             padding="10px"
           >
             {skeletons.map((skeleton) => (
@@ -30,12 +30,12 @@ function GamesGrid() {
         {!isLoading && (
           <SimpleGrid
             columns={{ base: 1, sm: 2, md: 2, lg: 2, xl: 3 }}
-            gap={10}
+            gap={8}
             padding="10px"
-            style={{
-              transition: 'opacity 0.3s ease-in-out',
-              opacity: isLoading ? 0 : 1,
-            }}
+            // style={{
+            //   transition: 'opacity 0.3s ease-in-out',
+            //   opacity: isLoading ? 0 : 1,
+            // }}
           >
             {games.map((game) => (
               <GameCardContainer key={game.id}>
@@ -44,9 +44,9 @@ function GamesGrid() {
             ))}
           </SimpleGrid>
         )}
-      </Center>
+      </Center> */}
 
-      {/* <Center>
+      <Center>
         <SimpleGrid
           columns={{
             base: 1,
@@ -55,20 +55,28 @@ function GamesGrid() {
             lg: 2,
             xl: 3,
           }}
-          gap={10}
+          gap={8}
           padding="10px"
-          style={{
-            transition: 'opacity 0.3s ease-in-out',
-            opacity: isLoading ? 0 : 1,
-          }}
         >
+          {isLoading &&
+            skeletons.map((skeleton) => (
+              <GameCardContainer key={skeleton}>
+                <GameCardSkeleton />
+              </GameCardContainer>
+            ))}
           {games.map((game) => (
-            <GameCardContainer key={game.id}>
+            <GameCardContainer
+              style={{
+                transition: 'opacity 0.3s ease-in-out',
+                opacity: isLoading ? 0 : 1,
+              }}
+              key={game.id}
+            >
               <GameCard game={game} />
             </GameCardContainer>
           ))}
         </SimpleGrid>
-      </Center> */}
+      </Center>
     </>
   );
 }

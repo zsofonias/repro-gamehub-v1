@@ -8,12 +8,12 @@ function useFetchData<T>(endpoint: string, options?: any) {
   const [data, setData] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const MIN_SKELETON_DISPLAY_MS = 500;
+  // const MIN_SKELETON_DISPLAY_MS = 500;
 
   useEffect(() => {
     const controller = new AbortController();
 
-    const startTime = Date.now();
+    // const startTime = Date.now();
     setIsLoading(true);
     apiClient
       .get<IFetchResponse<T>>(endpoint, {
@@ -29,16 +29,16 @@ function useFetchData<T>(endpoint: string, options?: any) {
         setError(err.message);
       })
       .finally(() => {
-        // setIsLoading(false);
+        setIsLoading(false);
         // setTimeout(() => {
         //   setIsLoading(false);
         // }, 500);
-        const elapsed = Date.now() - startTime;
-        const remaining = MIN_SKELETON_DISPLAY_MS - elapsed;
+        // const elapsed = Date.now() - startTime;
+        // const remaining = MIN_SKELETON_DISPLAY_MS - elapsed;
 
-        setTimeout(() => {
-          setIsLoading(false);
-        }, Math.max(0, remaining));
+        // setTimeout(() => {
+        //   setIsLoading(false);
+        // }, Math.max(0, remaining));
       });
 
     return () => {

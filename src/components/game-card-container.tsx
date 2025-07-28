@@ -1,7 +1,11 @@
 import type { PropsWithChildren } from 'react';
 import { Box } from '@chakra-ui/react';
 
-function GameCardContainer({ children }: PropsWithChildren) {
+type Props = {
+  style?: React.CSSProperties;
+};
+
+function GameCardContainer({ children, style }: PropsWithChildren<Props>) {
   return (
     <Box
       width={{
@@ -11,6 +15,7 @@ function GameCardContainer({ children }: PropsWithChildren) {
       }}
       borderRadius={8}
       overflow="hidden"
+      style={style}
     >
       {children}
     </Box>

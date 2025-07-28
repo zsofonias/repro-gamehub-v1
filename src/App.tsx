@@ -11,17 +11,25 @@ function App() {
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
       }}
+      templateColumns={{
+        base: '1fr',
+        lg: '200px 1fr',
+      }}
     >
       <GridItem area="nav">
         <Navbar />
       </GridItem>
 
-      <GridItem area="aside" display={{ base: 'none', lg: 'block' }}>
-        Aside
+      <GridItem
+        area="aside"
+        marginTop={2}
+        paddingX={5}
+        display={{ base: 'none', lg: 'block' }}
+      >
         <GenreList />
       </GridItem>
 
-      <GridItem area="main">
+      <GridItem area="main" marginTop={2}>
         <GamesGrid />
       </GridItem>
     </Grid>
