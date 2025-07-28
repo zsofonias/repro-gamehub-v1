@@ -5,6 +5,8 @@ import Navbar from './components/navbar';
 import GamesGrid from './components/games-grid';
 import GenreList from './components/genre-list';
 import GamePlatformSelector from './components/game-platform-selector';
+import GameSortOrderSelector from './components/game-sort-order-selector';
+
 import type { IGameQuery } from './types/game';
 
 function App() {
@@ -21,6 +23,14 @@ function App() {
     setGameQuery({
       ...gameQuery,
       platformId: platformId === 9999 ? undefined : platformId,
+    });
+  };
+
+  const handleSortOrderSelect = (sortOrder: string) => {
+    if (gameQuery.orderBy === sortOrder) return;
+    setGameQuery({
+      ...gameQuery,
+      orderBy: sortOrder === 'none' ? undefined : sortOrder,
     });
   };
 
@@ -51,10 +61,14 @@ function App() {
       <GridItem area="main" marginTop={2}>
         <Center>
           <Box>
-            <Flex justifyContent="flex-start">
+            <Flex gap={5}>
               <GamePlatformSelector
                 gameQuery={gameQuery}
                 onPlatformSelect={handlePlatformSelect}
+              />
+              <GameSortOrderSelector
+                gameQuery={gameQuery}
+                onSortOrderSelect={handleSortOrderSelect}
               />
             </Flex>
             <Center marginTop={5}>

@@ -19,6 +19,7 @@ function useGames({ gameQuery }: Props) {
     params: {
       genres: gameQuery?.genreId,
       platforms: gameQuery?.platformId,
+      ordering: gameQuery?.orderBy,
     },
   };
 
@@ -29,6 +30,7 @@ function useGames({ gameQuery }: Props) {
   } = useFetchData<IGame>('/games', options, [
     gameQuery?.genreId,
     gameQuery?.platformId,
+    gameQuery?.orderBy,
   ]);
   return { games, isLoading, error };
 }

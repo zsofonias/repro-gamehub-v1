@@ -15,4 +15,5 @@ export interface IGame {
 export interface IGameQuery {
   genreId: number | undefined;
   platformId: number | undefined;
+  orderBy: string | undefined;
 }
