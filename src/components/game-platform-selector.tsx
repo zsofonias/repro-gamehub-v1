@@ -2,13 +2,14 @@ import { Button, Menu, Portal } from '@chakra-ui/react';
 import { FaChevronDown } from 'react-icons/fa';
 
 import useGamePlatforms from '@/hooks/use-game-platforms';
+import type { IGameQuery } from '@/types/game';
 
 type Props = {
-  selectedPlatformId?: number;
+  gameQuery: IGameQuery;
   onPlatformSelect: (platformId: number) => void;
 };
 
-function GamePlatformSelector({ selectedPlatformId, onPlatformSelect }: Props) {
+function GamePlatformSelector({ gameQuery, onPlatformSelect }: Props) {
   const { platforms, isLoading, error } = useGamePlatforms();
 
   const platformsList = [
@@ -21,7 +22,7 @@ function GamePlatformSelector({ selectedPlatformId, onPlatformSelect }: Props) {
   ];
 
   const selectedPlatformName =
-    platformsList.find((platform) => platform.id === selectedPlatformId)
+    platformsList.find((platform) => platform.id === gameQuery?.platformId)
       ?.name || 'Platforms';
 
   if (error) return null;

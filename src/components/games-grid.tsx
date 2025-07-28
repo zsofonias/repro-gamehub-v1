@@ -4,17 +4,14 @@ import useGames from '@/hooks/use-games';
 import GameCard from './game-card';
 import GameCardContainer from './game-card-container';
 import GameCardSkeleton from './game-card-skeleton';
+import type { IGameQuery } from '@/types/game';
 
 type Props = {
-  selectedGenreId?: number | null;
-  selectedPlatformId?: number | null;
+  gameQuery?: IGameQuery;
 };
 
-function GamesGrid({ selectedGenreId, selectedPlatformId }: Props) {
-  const { games, isLoading, error } = useGames({
-    selectedGenreId,
-    selectedPlatformId,
-  });
+function GamesGrid({ gameQuery }: Props) {
+  const { games, isLoading, error } = useGames({ gameQuery });
 
   const skeletons = [1, 2, 3, 4, 5, 6];
   // const skeletons = Array.from({ length: 6 }, (_, i) => i);

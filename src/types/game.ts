@@ -11,3 +11,8 @@ export interface IGame {
   parent_platforms: { platform: IPlatform }[];
   metacritic: number;
 }
+
+export interface IGameQuery {
+  genreId: number | undefined;
+  platformId: number | undefined;
+}

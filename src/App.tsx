@@ -5,21 +5,23 @@ import Navbar from './components/navbar';
 import GamesGrid from './components/games-grid';
 import GenreList from './components/genre-list';
 import GamePlatformSelector from './components/game-platform-selector';
+import type { IGameQuery } from './types/game';
 
 function App() {
-  const [selectedGenreId, setSelectedGenreId] = useState<number | undefined>();
-  const [selectedPlatformId, setSelectedPlatformId] = useState<
-    number | undefined
-  >();
+  const [gameQuery, setGameQuery] = useState<IGameQuery>({} as IGameQuery);
 
   const handleGenreSelect = (genreId: number) => {
-    if (selectedGenreId === genreId) return setSelectedGenreId(undefined);
-    setSelectedGenreId(genreId);
+    setGameQuery({
+      ...gameQuery,
+      genreId: genreId === gameQuery.genreId ? undefined : genreId,
+    });
   };
 
   const handlePlatformSelect = (platformId: number) => {
-    if (platformId === 9999) return setSelectedPlatformId(undefined);
-    setSelectedPlatformId(platformId);
+    setGameQuery({
+      ...gameQuery,
+      platformId: platformId === 9999 ? undefined : platformId,
+    });
   };
 
   return (
@@ -43,26 +45,20 @@ function App() {
         paddingX={5}
         display={{ base: 'none', lg: 'block' }}
       >
-        <GenreList
-          onGenreSelect={handleGenreSelect}
-          selectedGenreId={selectedGenreId}
-        />
+        <GenreList gameQuery={gameQuery} onGenreSelect={handleGenreSelect} />
       </GridItem>
 
       <GridItem area="main" marginTop={2}>
         <Center>
           <Box>
-            <Flex justifyContent="flex-end">
+            <Flex justifyContent="flex-start">
               <GamePlatformSelector
-                selectedPlatformId={selectedPlatformId}
+                gameQuery={gameQuery}
                 onPlatformSelect={handlePlatformSelect}
               />
             </Flex>
             <Center marginTop={5}>
-              <GamesGrid
-                selectedGenreId={selectedGenreId}
-                selectedPlatformId={selectedPlatformId}
-              />
+              <GamesGrid gameQuery={gameQuery} />
             </Center>
           </Box>
         </Center>

@@ -1,12 +1,12 @@
 import useFetchData from './use-fetch-data';
 import type { IGame } from '@/types/game';
+import type { IGameQuery } from '@/types/game';
 
 type Props = {
-  selectedGenreId?: number | null;
-  selectedPlatformId?: number | null;
+  gameQuery?: IGameQuery | undefined;
 };
 
-function useGames({ selectedGenreId, selectedPlatformId }: Props) {
+function useGames({ gameQuery }: Props) {
   // const options = useMemo(
   //   () => ({
   //     params: {
@@ -17,8 +17,8 @@ function useGames({ selectedGenreId, selectedPlatformId }: Props) {
   // );
   const options = {
     params: {
-      genres: selectedGenreId,
-      platforms: selectedPlatformId,
+      genres: gameQuery?.genreId,
+      platforms: gameQuery?.platformId,
     },
   };
 
@@ -27,8 +27,8 @@ function useGames({ selectedGenreId, selectedPlatformId }: Props) {
     isLoading,
     error,
   } = useFetchData<IGame>('/games', options, [
-    selectedGenreId,
-    selectedPlatformId,
+    gameQuery?.genreId,
+    gameQuery?.platformId,
   ]);
   return { games, isLoading, error };
 }
