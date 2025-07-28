@@ -1,4 +1,4 @@
-import { Center, SimpleGrid, Text } from '@chakra-ui/react';
+import { SimpleGrid, Text } from '@chakra-ui/react';
 
 import useGames from '@/hooks/use-games';
 import GameCard from './game-card';
@@ -7,10 +7,14 @@ import GameCardSkeleton from './game-card-skeleton';
 
 type Props = {
   selectedGenreId?: number | null;
+  selectedPlatformId?: number | null;
 };
 
-function GamesGrid({ selectedGenreId }: Props) {
-  const { games, isLoading, error } = useGames({ selectedGenreId });
+function GamesGrid({ selectedGenreId, selectedPlatformId }: Props) {
+  const { games, isLoading, error } = useGames({
+    selectedGenreId,
+    selectedPlatformId,
+  });
 
   const skeletons = [1, 2, 3, 4, 5, 6];
   // const skeletons = Array.from({ length: 6 }, (_, i) => i);
@@ -18,7 +22,7 @@ function GamesGrid({ selectedGenreId }: Props) {
   return (
     <>
       {error && <Text>{error}</Text>}
-      {/* <Center>
+      {/* 
         {isLoading && (
           <SimpleGrid
             columns={{ base: 1, sm: 2, md: 2, lg: 2, xl: 3 }}
@@ -50,39 +54,37 @@ function GamesGrid({ selectedGenreId }: Props) {
             ))}
           </SimpleGrid>
         )}
-      </Center> */}
+      */}
 
-      <Center>
-        <SimpleGrid
-          columns={{
-            base: 1,
-            sm: 2,
-            md: 2,
-            lg: 2,
-            xl: 3,
-          }}
-          gap={8}
-          padding="10px"
-        >
-          {isLoading &&
-            skeletons.map((skeleton) => (
-              <GameCardContainer key={skeleton}>
-                <GameCardSkeleton />
-              </GameCardContainer>
-            ))}
-          {games.map((game) => (
-            <GameCardContainer
-              style={{
-                transition: 'opacity 0.3s ease-in-out',
-                opacity: isLoading ? 0 : 1,
-              }}
-              key={game.id}
-            >
-              <GameCard game={game} />
+      <SimpleGrid
+        columns={{
+          base: 1,
+          sm: 2,
+          md: 2,
+          lg: 2,
+          xl: 3,
+        }}
+        gap={8}
+        padding="10px"
+      >
+        {isLoading &&
+          skeletons.map((skeleton) => (
+            <GameCardContainer key={skeleton}>
+              <GameCardSkeleton />
             </GameCardContainer>
           ))}
-        </SimpleGrid>
-      </Center>
+        {games.map((game) => (
+          <GameCardContainer
+            style={{
+              transition: 'opacity 0.3s ease-in-out',
+              opacity: isLoading ? 0 : 1,
+            }}
+            key={game.id}
+          >
+            <GameCard game={game} />
+          </GameCardContainer>
+        ))}
+      </SimpleGrid>
     </>
   );
 }

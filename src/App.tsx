@@ -1,15 +1,25 @@
 import { useState } from 'react';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Box, Center, Flex, Grid, GridItem } from '@chakra-ui/react';
 
 import Navbar from './components/navbar';
 import GamesGrid from './components/games-grid';
 import GenreList from './components/genre-list';
+import GamePlatformSelector from './components/game-platform-selector';
 
 function App() {
   const [selectedGenreId, setSelectedGenreId] = useState<number | undefined>();
+  const [selectedPlatformId, setSelectedPlatformId] = useState<
+    number | undefined
+  >();
 
   const handleGenreSelect = (genreId: number) => {
+    if (selectedGenreId === genreId) return setSelectedGenreId(undefined);
     setSelectedGenreId(genreId);
+  };
+
+  const handlePlatformSelect = (platformId: number) => {
+    if (platformId === 9999) return setSelectedPlatformId(undefined);
+    setSelectedPlatformId(platformId);
   };
 
   return (
@@ -40,7 +50,22 @@ function App() {
       </GridItem>
 
       <GridItem area="main" marginTop={2}>
-        <GamesGrid selectedGenreId={selectedGenreId} />
+        <Center>
+          <Box>
+            <Flex justifyContent="flex-end">
+              <GamePlatformSelector
+                selectedPlatformId={selectedPlatformId}
+                onPlatformSelect={handlePlatformSelect}
+              />
+            </Flex>
+            <Center marginTop={5}>
+              <GamesGrid
+                selectedGenreId={selectedGenreId}
+                selectedPlatformId={selectedPlatformId}
+              />
+            </Center>
+          </Box>
+        </Center>
       </GridItem>
     </Grid>
   );

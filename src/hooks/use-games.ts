@@ -3,9 +3,10 @@ import type { IGame } from '@/types/game';
 
 type Props = {
   selectedGenreId?: number | null;
+  selectedPlatformId?: number | null;
 };
 
-function useGames({ selectedGenreId }: Props) {
+function useGames({ selectedGenreId, selectedPlatformId }: Props) {
   // const options = useMemo(
   //   () => ({
   //     params: {
@@ -17,6 +18,7 @@ function useGames({ selectedGenreId }: Props) {
   const options = {
     params: {
       genres: selectedGenreId,
+      platforms: selectedPlatformId,
     },
   };
 
@@ -24,7 +26,10 @@ function useGames({ selectedGenreId }: Props) {
     data: games,
     isLoading,
     error,
-  } = useFetchData<IGame>('/games', options, [selectedGenreId]);
+  } = useFetchData<IGame>('/games', options, [
+    selectedGenreId,
+    selectedPlatformId,
+  ]);
   return { games, isLoading, error };
 }
 export default useGames;
