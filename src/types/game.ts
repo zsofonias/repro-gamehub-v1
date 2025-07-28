@@ -11,9 +11,3 @@ export interface IGame {
   parent_platforms: { platform: IPlatform }[];
   metacritic: number;
 }
-[];
-
-export interface IFetchGamesResponse {
-  count: number;
-  results: IGame[];
-}
