@@ -1,10 +1,14 @@
-import { CanceledError } from 'axios';
+import { CanceledError, type AxiosRequestConfig } from 'axios';
 import { useState, useEffect } from 'react';
 import apiClient from '@/services/api-client';
 
 import type { IFetchResponse } from '@/types/types';
 
-function useFetchData<T>(endpoint: string, options?: any) {
+function useFetchData<T>(
+  endpoint: string,
+  options?: AxiosRequestConfig,
+  deps: any[] = []
+) {
   const [data, setData] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -24,6 +28,7 @@ function useFetchData<T>(endpoint: string, options?: any) {
         setData(res.data.results);
       })
       .catch((err) => {
+        console.log('err: ', err);
         // if (err.name === 'AbortError') return;
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -44,7 +49,7 @@ function useFetchData<T>(endpoint: string, options?: any) {
     return () => {
       controller.abort();
     };
-  }, [endpoint, options]);
+  }, [endpoint, ...deps]);
 
   return { data, isLoading, error };
 }

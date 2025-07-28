@@ -6,6 +6,7 @@ import {
   FaLinux,
   FaAndroid,
   FaApple,
+  FaInfoCircle,
 } from 'react-icons/fa';
 import { MdPhoneIphone } from 'react-icons/md';
 import { SiNintendo } from 'react-icons/si';
@@ -18,7 +19,7 @@ type Props = {
   platforms: IGame['parent_platforms'];
 };
 
-function GamePlatforms({ platforms }: Props) {
+function GamePlatforms({ platforms = [] }: Props) {
   const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     playstation: FaPlaystation,
@@ -34,7 +35,11 @@ function GamePlatforms({ platforms }: Props) {
   return (
     <HStack marginY={'10px'}>
       {platforms.map(({ platform }) => (
-        <Icon as={iconMap[platform.slug]} key={platform.id} color="gray.500" />
+        <Icon
+          as={iconMap[platform?.slug] ?? FaInfoCircle}
+          key={platform.id}
+          color="gray.500"
+        />
       ))}
     </HStack>
   );
