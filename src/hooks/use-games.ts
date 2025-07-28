@@ -7,11 +7,15 @@ import { CanceledError } from 'axios';
 
 function useGames() {
   const [games, setGames] = useState<IGame[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const MIN_SKELETON_DISPLAY_MS = 500;
 
   useEffect(() => {
     const controller = new AbortController();
 
+    const startTime = Date.now();
+    setIsLoading(true);
     apiClient
       .get<IFetchGamesResponse>('/games', { signal: controller.signal })
       .then((res) => {
@@ -21,6 +25,18 @@ function useGames() {
         // if (err.name === 'AbortError') return;
         if (err instanceof CanceledError) return;
         setError(err.message);
+      })
+      .finally(() => {
+        // setIsLoading(false);
+        // setTimeout(() => {
+        //   setIsLoading(false);
+        // }, 500);
+        const elapsed = Date.now() - startTime;
+        const remaining = MIN_SKELETON_DISPLAY_MS - elapsed;
+
+        setTimeout(() => {
+          setIsLoading(false);
+        }, Math.max(0, remaining));
       });
 
     return () => {
@@ -28,6 +44,6 @@ function useGames() {
     };
   }, []);
 
-  return { games, error };
+  return { games, isLoading, error };
 }
 export default useGames;
