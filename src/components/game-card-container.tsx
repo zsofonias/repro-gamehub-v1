@@ -8,11 +8,8 @@ type Props = {
 function GameCardContainer({ children, style }: PropsWithChildren<Props>) {
   return (
     <Box
-      width={{
-        base: '260px',
-        // sm: '220px',
-        md: '300px',
-      }}
+      width="100%"
+      maxWidth="300px"
       borderRadius={8}
       overflow="hidden"
       style={style}

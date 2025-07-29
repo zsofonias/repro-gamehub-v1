@@ -20,6 +20,7 @@ function useGames({ gameQuery }: Props) {
       genres: gameQuery?.genreId,
       platforms: gameQuery?.platformId,
       ordering: gameQuery?.orderBy,
+      search: gameQuery?.search,
     },
   };
 
@@ -31,6 +32,7 @@ function useGames({ gameQuery }: Props) {
     gameQuery?.genreId,
     gameQuery?.platformId,
     gameQuery?.orderBy,
+    gameQuery?.search,
   ]);
   return { games, isLoading, error };
 }

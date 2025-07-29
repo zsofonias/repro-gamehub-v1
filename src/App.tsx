@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Center, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 
 import Navbar from './components/navbar';
 import GamesGrid from './components/games-grid';
@@ -34,6 +34,13 @@ function App() {
     });
   };
 
+  const handleSearchInput = (search: string) => {
+    setGameQuery({
+      ...gameQuery,
+      search: search === '' ? undefined : search,
+    });
+  };
+
   return (
     <Grid
       templateAreas={{
@@ -46,7 +53,7 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <Navbar />
+        <Navbar onSearchInput={handleSearchInput} />
       </GridItem>
 
       <GridItem
@@ -59,23 +66,32 @@ function App() {
       </GridItem>
 
       <GridItem area="main" marginTop={2}>
-        <Center>
-          <Box>
-            <Flex gap={5}>
-              <GamePlatformSelector
-                gameQuery={gameQuery}
-                onPlatformSelect={handlePlatformSelect}
-              />
-              <GameSortOrderSelector
-                gameQuery={gameQuery}
-                onSortOrderSelect={handleSortOrderSelect}
-              />
-            </Flex>
-            <Center marginTop={5}>
-              <GamesGrid gameQuery={gameQuery} />
-            </Center>
+        <Box
+          px={{
+            base: 5,
+            lg: 20,
+          }}
+        >
+          <Flex
+            gap={{
+              base: 3,
+              lg: 5,
+            }}
+            wrap="wrap"
+          >
+            <GamePlatformSelector
+              gameQuery={gameQuery}
+              onPlatformSelect={handlePlatformSelect}
+            />
+            <GameSortOrderSelector
+              gameQuery={gameQuery}
+              onSortOrderSelect={handleSortOrderSelect}
+            />
+          </Flex>
+          <Box mt={5} mx="auto">
+            <GamesGrid gameQuery={gameQuery} />
           </Box>
-        </Center>
+        </Box>
       </GridItem>
     </Grid>
   );

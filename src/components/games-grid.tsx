@@ -61,8 +61,8 @@ function GamesGrid({ gameQuery }: Props) {
           lg: 2,
           xl: 3,
         }}
+        justifyItems="center"
         gap={8}
-        padding="10px"
       >
         {isLoading &&
           skeletons.map((skeleton) => (
