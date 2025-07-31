@@ -16,73 +16,40 @@ function GamesGrid({ gameQuery }: Props) {
   const skeletons = [1, 2, 3, 4, 5, 6];
   // const skeletons = Array.from({ length: 6 }, (_, i) => i);
 
+  if (error) {
+    return <Text>{error}</Text>;
+  }
+
   return (
-    <>
-      {error && <Text>{error}</Text>}
-      {/* 
-        {isLoading && (
-          <SimpleGrid
-            columns={{ base: 1, sm: 2, md: 2, lg: 2, xl: 3 }}
-            gap={8}
-            padding="10px"
-          >
-            {skeletons.map((skeleton) => (
-              <GameCardContainer key={skeleton}>
-                <GameCardSkeleton />
-              </GameCardContainer>
-            ))}
-          </SimpleGrid>
-        )}
-
-        {!isLoading && (
-          <SimpleGrid
-            columns={{ base: 1, sm: 2, md: 2, lg: 2, xl: 3 }}
-            gap={8}
-            padding="10px"
-            // style={{
-            //   transition: 'opacity 0.3s ease-in-out',
-            //   opacity: isLoading ? 0 : 1,
-            // }}
-          >
-            {games.map((game) => (
-              <GameCardContainer key={game.id}>
-                <GameCard game={game} />
-              </GameCardContainer>
-            ))}
-          </SimpleGrid>
-        )}
-      */}
-
-      <SimpleGrid
-        columns={{
-          base: 1,
-          sm: 2,
-          md: 2,
-          lg: 2,
-          xl: 3,
-        }}
-        justifyItems="center"
-        gap={8}
-      >
-        {isLoading &&
-          skeletons.map((skeleton) => (
-            <GameCardContainer key={skeleton}>
-              <GameCardSkeleton />
-            </GameCardContainer>
-          ))}
-        {games.map((game) => (
-          <GameCardContainer
-            style={{
-              transition: 'opacity 0.3s ease-in-out',
-              opacity: isLoading ? 0 : 1,
-            }}
-            key={game.id}
-          >
-            <GameCard game={game} />
+    <SimpleGrid
+      columns={{
+        base: 1,
+        sm: 2,
+        md: 2,
+        lg: 2,
+        xl: 3,
+      }}
+      justifyItems="center"
+      gap={8}
+    >
+      {isLoading &&
+        skeletons.map((skeleton) => (
+          <GameCardContainer key={skeleton}>
+            <GameCardSkeleton />
           </GameCardContainer>
         ))}
-      </SimpleGrid>
-    </>
+      {games.map((game) => (
+        <GameCardContainer
+          style={{
+            transition: 'opacity 0.3s ease-in-out',
+            opacity: isLoading ? 0 : 1,
+          }}
+          key={game.id}
+        >
+          <GameCard game={game} />
+        </GameCardContainer>
+      ))}
+    </SimpleGrid>
   );
 }
 export default GamesGrid;

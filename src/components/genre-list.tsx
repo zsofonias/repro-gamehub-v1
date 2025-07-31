@@ -1,4 +1,4 @@
-import { HStack, List, Image, Button } from '@chakra-ui/react';
+import { HStack, List, Image, Button, Heading } from '@chakra-ui/react';
 
 import useGenre from '@/hooks/use-genre';
 import GenreListItemSkeleton from './genre-list-item-skeleton';
@@ -20,32 +20,38 @@ function GenreList({ gameQuery, onGenreSelect }: Props) {
   if (error) return null;
 
   return (
-    <List.Root gap="3" variant="plain">
-      {isLoading && skeletons}
-      {genres.map((genre) => (
-        <List.Item key={genre.id}>
-          <HStack>
-            <Image
-              boxSize="32px"
-              borderRadius={6}
-              src={getCroppedImageUrl(genre.image_background)}
-              alt={genre.name}
-            />
-            <Button
-              onClick={() => onGenreSelect(genre.id)}
-              variant="ghost"
-              px={0}
-              fontSize="lg"
-              color={gameQuery?.genreId === genre.id ? 'purple.400' : 'inherit'}
-              fontWeight={gameQuery?.genreId === genre.id ? 'bold' : 'normal'}
-            >
-              {/* <a href={`/genres/${genre.id}`}>{genre.name}</a> */}
-              {genre.name}
-            </Button>
-          </HStack>
-        </List.Item>
-      ))}
-    </List.Root>
+    <>
+      <Heading my={2} as="h2" fontSize="xl" fontWeight="bold" mb={5}>
+        Genres
+      </Heading>
+      <List.Root gap="3" variant="plain">
+        {isLoading && skeletons}
+        {genres.map((genre) => (
+          <List.Item key={genre.id}>
+            <HStack>
+              <Image
+                boxSize="32px"
+                borderRadius={6}
+                src={getCroppedImageUrl(genre.image_background)}
+                alt={genre.name}
+              />
+              <Button
+                onClick={() => onGenreSelect(genre.id)}
+                variant="ghost"
+                px={0}
+                fontSize="lg"
+                color={
+                  gameQuery?.genreId === genre.id ? 'purple.400' : 'inherit'
+                }
+                fontWeight={gameQuery?.genreId === genre.id ? 'bold' : 'normal'}
+              >
+                {genre.name}
+              </Button>
+            </HStack>
+          </List.Item>
+        ))}
+      </List.Root>
+    </>
   );
 }
 export default GenreList;
